@@ -6,15 +6,15 @@ Group Admin &amp; Multipurpose Telegram bot
 
 -   **Kick**
 
-    Reply to the user message with `/kick <reason>`.
+    Reply to the user message with `/kick [reason]`.
 
 -   **Warn**
 
-    Reply to the user message with `/warn <reason>`, or `/warn reset` to reset their warns.
+    Reply to the user message with `/warn [reason]`, or `/warn reset` to reset their warns.
 
 -   **Ban**
 
-    Reply to the user message with `/ban <reason>`.
+    Reply to the user message with `/ban [reason]`.
 
 ## Setup
 
