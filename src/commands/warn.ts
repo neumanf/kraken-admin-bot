@@ -33,7 +33,7 @@ export const warnUser = async (
         await updateWarns(user.id, userWarns);
 
         ctx.deleteMessage(ctx.message?.message_id);
-        ctx.deleteMessage(user.id);
+        ctx.deleteMessage(ctx?.message?.reply_to_message.message_id);
 
         ctx.replyWithMarkdown(
             `${ALERT_ICON} [${user.first_name}](tg://user?id=${user.id}) has been warned. (${userWarns}/3)\nReason: ${reason}`
@@ -41,6 +41,7 @@ export const warnUser = async (
 
         if (userWarns >= 3) {
             banUser(ctx, user);
+            await updateWarns(user.id, 0);
         }
     } catch (e) {
         console.log(e);

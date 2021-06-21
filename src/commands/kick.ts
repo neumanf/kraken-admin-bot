@@ -14,7 +14,7 @@ export const kickUser = (
 
     try {
         ctx.deleteMessage(ctx.message?.message_id);
-        ctx.deleteMessage(user.id);
+        ctx.deleteMessage(ctx?.message?.reply_to_message.message_id);
 
         ctx.kickChatMember(user.id);
         ctx.unbanChatMember(user.id);
