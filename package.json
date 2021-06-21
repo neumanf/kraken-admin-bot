@@ -1,0 +1,26 @@
+{
+  "name": "kraken",
+  "version": "1.0.0",
+  "description": "Multipurpose Admin Telegram bot",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "(tsc || true) && node src/index.js",
+    "dev": "nodemon src/index.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/cheerio": "^0.22.29",
+    "@types/express": "^4.17.12",
+    "@types/mongodb": "^3.6.18",
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.7",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.6.9",
+    "telegraf": "^4.3.0"
+  }
+}
