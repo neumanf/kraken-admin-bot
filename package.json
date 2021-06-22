@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "googletrans": "^1.0.2",
     "mongodb": "^3.6.9",
     "telegraf": "^4.3.0"
   }

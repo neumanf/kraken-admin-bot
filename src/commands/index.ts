@@ -4,6 +4,7 @@ import { Telegraf } from "telegraf/typings/telegraf";
 import { isAdmin } from "../middlewares/admin";
 import { banUser } from "./ban";
 import { kickUser } from "./kick";
+import { translateText } from "./translate";
 import { warnUser } from "./warn";
 
 export const setupCommands = (bot: Telegraf<Context<Update>>) => {
@@ -20,4 +21,6 @@ export const setupCommands = (bot: Telegraf<Context<Update>>) => {
     bot.hears(/^\/kick\s?(.*)$/, isAdmin, (ctx) =>
         kickUser(ctx, ctx?.message?.reply_to_message?.from)
     );
+
+    bot.hears(/\/translate\s?(\w+)?/, async (ctx) => await translateText(ctx));
 };

@@ -4,17 +4,25 @@ Group Admin &amp; Multipurpose Telegram bot
 
 ## Features
 
--   **Kick**
+-   Admin
 
-    Reply to the user message with `/kick [reason]`.
+    -   **Kick**
 
--   **Warn**
+        Reply to the user message with `/kick [reason]`.
 
-    Reply to the user message with `/warn [reason]`, or `/warn reset` to reset their warns.
+    -   **Warn**
 
--   **Ban**
+        Reply to the user message with `/warn [reason]`, or `/warn reset` to reset their warns.
 
-    Reply to the user message with `/ban [reason]`.
+    -   **Ban**
+
+        Reply to the user message with `/ban [reason]`.
+
+-   User
+
+    -   **Translate**
+
+        Reply to a message with `/translate [language-code]`. Defaults to `en`.
 
 ## Setup
 
