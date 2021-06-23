@@ -1,3 +1,4 @@
+import { Markup } from "telegraf";
 import TelegrafContext from "telegraf/typings/context";
 import { getWarns, updateWarns } from "../core/db/warn";
 import { User } from "../interfaces/user";
@@ -35,8 +36,14 @@ export const warnUser = async (
         ctx.deleteMessage(ctx.message?.message_id);
         ctx.deleteMessage(ctx?.message?.reply_to_message.message_id);
 
-        ctx.replyWithMarkdown(
-            `${ALERT_ICON} [${user.first_name}](tg://user?id=${user.id}) has been warned. (${userWarns}/3)\nReason: ${reason}`
+        ctx.reply(
+            `${ALERT_ICON} [${user.first_name}](tg://user?id=${user.id}) has been warned. (${userWarns}/3)\nReason: ${reason}`,
+            {
+                parse_mode: "markdown",
+                ...Markup.inlineKeyboard([
+                    Markup.button.callback("❌ Cancel", "unwarn"),
+                ]),
+            }
         );
 
         if (userWarns >= 3) {

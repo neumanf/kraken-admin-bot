@@ -1,10 +1,9 @@
-import TelegrafContext from "telegraf/typings/context";
+export const isAdmin = async (ctx: any, next: () => Promise<void>) => {
+    const userId = ctx.message
+        ? ctx?.message?.from.id
+        : ctx?.update?.callback_query.from.id;
 
-export const isAdmin = async (
-    ctx: TelegrafContext,
-    next: () => Promise<void>
-) => {
-    const member = await ctx.getChatMember(ctx?.message?.from.id as number);
+    const member = await ctx.getChatMember(userId);
 
     if (member.status === "creator" || member.status === "administrator") {
         next();
