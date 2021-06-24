@@ -18,11 +18,23 @@ Group Admin &amp; Multipurpose Telegram bot
 
         Reply to the user message with `/ban [reason]`.
 
+    -   **Add custom command**
+
+        Use `/addcom <name> <content>` to add a custom command. You can also create a command with a counter by using `$COUNTER` on the message.
+
+    -   **Delete custom command**
+
+        Use `/delcom <name>` to delete a custom command.
+
 -   User
 
     -   **Translate**
 
         Reply to a message with `/translate [language-code]`. Defaults to `en`.
+
+    -   **Custom commands**
+
+        Use `/commands` to show all custom commands available.
 
 ## Setup
 

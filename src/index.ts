@@ -5,9 +5,11 @@ import express, { Request, Response } from "express";
 import { bot } from "./core/bot/bot";
 import { setupCommands } from "./commands";
 import { setupActions } from "./actions";
+import { setupEvents } from "./events";
 
 setupCommands(bot);
 setupActions(bot);
+setupEvents(bot);
 
 (() => {
     if (process.env.NODE_ENV === "production") {
