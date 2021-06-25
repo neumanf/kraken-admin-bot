@@ -1,11 +1,10 @@
-import Context from "telegraf/typings/context";
-import { Update } from "telegraf/typings/core/types/typegram";
 import { Telegraf } from "telegraf/typings/telegraf";
+import { ExtendedContext } from "../core/bot/context";
 import { isAdmin } from "../middlewares/admin";
 import { unbanUser } from "./unban";
 import { unwarnUser } from "./unwarn";
 
-export const setupActions = (bot: Telegraf<Context<Update>>) => {
+export const setupActions = (bot: Telegraf<ExtendedContext>) => {
     bot.action(
         "unwarn",
         isAdmin,

@@ -16,7 +16,7 @@ export const banUser = (ctx: TelegrafContext | any, user: User | undefined) => {
 
         ctx.kickChatMember(user.id);
 
-        ctx.reply(
+        ctx.replyToMessage(
             `${STOP_ICON} [${user.first_name}](tg://user?id=${user.id}) banned.\nReason: ${reason}`,
             {
                 parse_mode: "markdown",
@@ -27,6 +27,6 @@ export const banUser = (ctx: TelegrafContext | any, user: User | undefined) => {
         );
     } catch (e) {
         console.log(e);
-        ctx.reply(`${ALERT_ICON} Could not ban user.`);
+        ctx.replyToMessage(`${ALERT_ICON} Could not ban user.`);
     }
 };

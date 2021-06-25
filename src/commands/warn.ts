@@ -16,11 +16,13 @@ export const warnUser = async (
         try {
             await updateWarns(user.id, 0);
 
-            ctx.replyWithMarkdown(
+            ctx.replyToMessage(
                 `${INFO_ICON} [${user.first_name}](tg://user?id=${user.id})'s warns have been reseted.`
             );
         } catch (e) {
-            ctx.reply(`Error: Could not reset ${user.first_name}'s warns.`);
+            ctx.replyToMessage(
+                `Error: Could not reset ${user.first_name}'s warns.`
+            );
         }
 
         return;
@@ -36,7 +38,7 @@ export const warnUser = async (
         ctx.deleteMessage(ctx.message?.message_id);
         ctx.deleteMessage(ctx?.message?.reply_to_message.message_id);
 
-        ctx.reply(
+        ctx.replyToMessage(
             `${ALERT_ICON} [${user.first_name}](tg://user?id=${user.id}) has been warned. (${userWarns}/3)\nReason: ${reason}`,
             {
                 parse_mode: "markdown",
@@ -52,6 +54,6 @@ export const warnUser = async (
         }
     } catch (e) {
         console.log(e);
-        ctx.reply(`${ALERT_ICON} Could not warn user.`);
+        ctx.replyToMessage(`${ALERT_ICON} Could not warn user.`);
     }
 };

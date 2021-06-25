@@ -1,5 +1,3 @@
-import Context from "telegraf/typings/context";
-import { Update } from "telegraf/typings/core/types/typegram";
 import { Telegraf } from "telegraf/typings/telegraf";
 
 import { Composer } from "telegraf";
@@ -8,8 +6,9 @@ import {
     updateCustomCommand,
 } from "../core/db/custom_commands";
 import { STOP_ICON } from "../utils/consts";
+import { ExtendedContext } from "../core/bot/context";
 
-export const setupEvents = (bot: Telegraf<Context<Update>>) => {
+export const setupEvents = (bot: Telegraf<ExtendedContext>) => {
     bot.on(
         "text",
         Composer.lazy(async (ctx: any) => {
@@ -29,7 +28,7 @@ export const setupEvents = (bot: Telegraf<Context<Update>>) => {
                     try {
                         if (customCommands[i].name == ctx.match![1]) {
                             if (customCommands[i].counter >= 0) {
-                                ctx.replyWithMarkdown(
+                                ctx.replyToMessage(
                                     customCommands[i].value.replace(
                                         "$COUNTER",
                                         `${customCommands[i].counter + 1}`
@@ -41,12 +40,12 @@ export const setupEvents = (bot: Telegraf<Context<Update>>) => {
                                     customCommands[i].counter
                                 );
                             } else {
-                                ctx.replyWithMarkdown(customCommands[i].value);
+                                ctx.replyToMessage(customCommands[i].value);
                             }
                         }
                     } catch (e) {
                         console.log(e);
-                        ctx.replyWithMarkdown(
+                        ctx.replyToMessage(
                             `${STOP_ICON} Error: Could not send command.`
                         );
                     }

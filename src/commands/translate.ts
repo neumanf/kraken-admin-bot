@@ -9,13 +9,11 @@ export const translateText = async (ctx: any): Promise<string | undefined> => {
     try {
         const result = await tr(ctx!.message!.reply_to_message!.text, language);
 
-        ctx.replyWithHTML(
-            `💬 <b>Translation</b> [${language.toUpperCase()}]\n\n<i>${
-                result.text
-            }</i>`
+        ctx.replyToMessage(
+            `💬 *Translation* [${language.toUpperCase()}]\n\n_${result.text}_`
         );
     } catch (e) {
         console.log(e);
-        ctx.reply(`${ALERT_ICON} Error while translating.`);
+        ctx.replyToMessage(`${ALERT_ICON} Error while translating.`);
     }
 };

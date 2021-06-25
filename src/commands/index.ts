@@ -1,6 +1,5 @@
-import Context from "telegraf/typings/context";
-import { Update } from "telegraf/typings/core/types/typegram";
 import { Telegraf } from "telegraf/typings/telegraf";
+import { ExtendedContext } from "../core/bot/context";
 import { isAdmin } from "../middlewares/admin";
 import { banUser } from "./ban";
 import {
@@ -12,8 +11,8 @@ import { kickUser } from "./kick";
 import { translateText } from "./translate";
 import { warnUser } from "./warn";
 
-export const setupCommands = (bot: Telegraf<Context<Update>>) => {
-    bot.command("ping", isAdmin, (ctx) => ctx.reply("Pong!"));
+export const setupCommands = (bot: Telegraf<ExtendedContext>) => {
+    bot.command("ping", isAdmin, (ctx) => ctx.replyToMessage("Pong!"));
 
     bot.hears(/^\/warn\s?(.*)$/, isAdmin, (ctx) =>
         warnUser(ctx, ctx?.message?.reply_to_message?.from)

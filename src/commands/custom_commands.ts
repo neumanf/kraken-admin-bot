@@ -15,10 +15,12 @@ const addCustomCommand = async (ctx: any) => {
             ctx.message?.chat.id as number
         );
 
-        ctx.reply(`${SUCCESS_ICON} "${ctx?.match![1]}" command added.`);
+        ctx.replyToMessage(
+            `${SUCCESS_ICON} "${ctx?.match![1]}" command added.`
+        );
     } catch (e) {
         console.log(e);
-        ctx.reply(`${STOP_ICON} Error: Command not added.`);
+        ctx.replyToMessage(`${STOP_ICON} Error: Command not added.`);
     }
 };
 
@@ -31,10 +33,12 @@ const deleteCustomCommand = async (ctx: any) => {
             ctx.message?.chat.id as number
         );
 
-        ctx.reply(`${SUCCESS_ICON} "${ctx?.match![1]}" command deleted.`);
+        ctx.replyToMessage(
+            `${SUCCESS_ICON} "${ctx?.match![1]}" command deleted.`
+        );
     } catch (e) {
         console.log(e);
-        ctx.reply(`${STOP_ICON} Error: Command not deleted.`);
+        ctx.replyToMessage(`${STOP_ICON} Error: Command not deleted.`);
     }
 };
 
@@ -45,7 +49,7 @@ const getCustomCommands = async (ctx: any) => {
         ctx.message?.chat.id as number
     );
 
-    ctx.replyWithMarkdown(
+    ctx.replyToMessage(
         customCommands.length === 0
             ? `${STOP_ICON} Não há comandos disponíveis nesse chat.`
             : "🤖 *Custom commands*\n\n" +

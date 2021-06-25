@@ -19,11 +19,11 @@ export const kickUser = (
         ctx.kickChatMember(user.id);
         ctx.unbanChatMember(user.id);
 
-        ctx.replyWithMarkdown(
+        ctx.replyToMessage(
             `${STOP_ICON} [${user.first_name}](tg://user?id=${user.id}) kicked.\nReason: ${reason}`
         );
     } catch (e) {
         console.log(e);
-        ctx.reply(`${ALERT_ICON} Could not kick user.`);
+        ctx.replyToMessage(`${ALERT_ICON} Could not kick user.`);
     }
 };
