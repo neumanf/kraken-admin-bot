@@ -10,6 +10,7 @@ import {
 import { kickUser } from "./kick";
 import { translateText } from "./translate";
 import { warnUser } from "./warn";
+import { setWelcomeMessage } from "./welcome";
 
 export const setupCommands = (bot: Telegraf<ExtendedContext>) => {
     bot.command("ping", isAdmin, (ctx) => ctx.replyToMessage("Pong!"));
@@ -24,6 +25,12 @@ export const setupCommands = (bot: Telegraf<ExtendedContext>) => {
 
     bot.hears(/^\/kick\s?(.*)$/, isAdmin, (ctx) =>
         kickUser(ctx, ctx?.message?.reply_to_message?.from)
+    );
+
+    bot.hears(
+        /^\/setwelcome\s(.*)$/,
+        isAdmin,
+        async (ctx) => await setWelcomeMessage(ctx)
     );
 
     bot.hears(

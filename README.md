@@ -18,6 +18,10 @@ Group Admin &amp; Multipurpose Telegram bot
 
         Reply to the user message with `/ban [reason]`.
 
+    -   **Set Welcome Message**
+
+        Use `/setwelcome <message>` to set a welcome message to new users. You can use `{NAME}`, `{USERNAME}` and `{ID}` to refer to the user's name, username and id, respectively. Furthermore, if you need to add buttons that leads to URLs, use `{BUTTON: button title, https://your-url.com}`.
+
     -   **Add custom command**
 
         Use `/addcom <name> <content>` to add a custom command. You can also create a command with a counter by using `$COUNTER` on the message.

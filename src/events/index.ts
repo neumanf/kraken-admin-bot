@@ -7,8 +7,11 @@ import {
 } from "../core/db/custom_commands";
 import { STOP_ICON } from "../utils/consts";
 import { ExtendedContext } from "../core/bot/context";
+import { filterNewMembers } from "./filter_new_member";
 
 export const setupEvents = (bot: Telegraf<ExtendedContext>) => {
+    bot.on("new_chat_members", (ctx) => filterNewMembers(ctx));
+
     bot.on(
         "text",
         Composer.lazy(async (ctx: any) => {
