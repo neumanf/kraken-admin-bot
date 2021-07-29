@@ -22,9 +22,10 @@ setupEvents(bot);
         app.use(bot.webhookCallback(process.env.SECRET_PATH as string));
         app.get("/", (req: Request, res: Response) => res.send("Hello world"));
         app.listen(parseInt(process.env.PORT as string), () =>
-            console.log(`Bot running on ${process.env.PORT} port.`)
+            console.log(`[SERVER] Bot running on ${process.env.PORT} port.`)
         );
     } else {
+        console.log("[SERVER] Bot running via polling");
         bot.launch();
     }
 })();
