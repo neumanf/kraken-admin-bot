@@ -2,7 +2,7 @@ import tr from "googletrans";
 import { ALERT_ICON } from "../utils/consts";
 
 export const translateText = async (ctx: any): Promise<string | undefined> => {
-    if (!ctx!.message!.reply_to_message!.text) return;
+    if (!ctx!.message!.reply_to_message) return;
 
     const language = ctx!.match![1] ?? "en";
 
