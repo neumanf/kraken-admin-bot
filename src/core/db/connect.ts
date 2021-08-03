@@ -1,16 +1,17 @@
-import { MongoClient, Db } from "mongodb";
+import mongoose from "mongoose";
 
-let cachedDB: Db | null = null;
+const connectToDB = async (): Promise<void> => {
+    try {
+        await mongoose.connect(String(process.env.MONGO_URI), {
+            useNewUrlParser: true,
+            useFindAndModify: false,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+        });
+        console.log("[DB] Connected successfully.");
+    } catch (e) {
+        console.error("[DB] Error:", e);
+    }
+};
 
-export async function connectToDB() {
-    if (cachedDB) return cachedDB;
-
-    const client = await MongoClient.connect(process.env.MONGO_URI as string, {
-        useUnifiedTopology: true,
-    });
-    const db = client.db(process.env.DB_NAME);
-
-    cachedDB = db;
-
-    return db;
-}
+export default connectToDB;

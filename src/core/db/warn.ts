@@ -1,18 +1,14 @@
-import { connectToDB } from "./connect";
+import { IUpdateOne } from "../../interfaces/updateOne";
+import User from "../../models/user";
 
-export const getWarns = async (_id: number) => {
-    const db = await connectToDB();
-    const user = await db.collection("users").findOne({
+export const getWarns = async (_id: number): Promise<number> => {
+    const user = await User.findOne({
         id: _id,
     });
 
-    return user ? user.warns : 0;
+    return user?.warns ? user.warns : 0;
 };
 
-export const updateWarns = async (_id: number, value: number) => {
-    const db = await connectToDB();
-
-    return await db
-        .collection("users")
-        .updateOne({ id: _id }, { $set: { warns: value } }, { upsert: true });
+export const updateWarns = async (_id: number, value: number): Promise<IUpdateOne> => {
+    return await User.updateOne({ id: _id }, { $set: { warns: value } }, { upsert: true });
 };

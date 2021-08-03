@@ -1,21 +1,26 @@
-import { Telegraf } from "telegraf/typings/telegraf";
+import { Bot } from "grammy";
+import isAdmin from "../middlewares/admin";
+
 import { ExtendedContext } from "../core/bot/context";
-import { isAdmin } from "../middlewares/admin";
-import { unbanUser } from "./unban";
-import { unwarnUser } from "./unwarn";
+import unban from "./unban";
+import unwarn from "./unwarn";
 
-export const setupActions = (bot: Telegraf<ExtendedContext>) => {
-    bot.action(
-        "unwarn",
-        isAdmin,
-        async (ctx: any) =>
-            await unwarnUser(
-                ctx,
-                ctx?.update?.callback_query?.message?.entities![0].user
-            )
-    );
+const actions = (bot: Bot<ExtendedContext>): void => {
+    bot.callbackQuery("unban", isAdmin, async (ctx) => {
+        const entities = ctx.callbackQuery.message?.entities;
 
-    bot.action("unban", isAdmin, (ctx: any) =>
-        unbanUser(ctx, ctx?.update?.callback_query?.message?.entities![0].user)
-    );
+        if (entities?.[0].type === "text_mention") {
+            return await unban(ctx, entities?.[0]?.user);
+        }
+    });
+
+    bot.callbackQuery("unwarn", isAdmin, async (ctx) => {
+        const entities = ctx.callbackQuery.message?.entities;
+
+        if (entities?.[0].type === "text_mention") {
+            return await unwarn(ctx, entities?.[0]?.user);
+        }
+    });
 };
+
+export default actions;

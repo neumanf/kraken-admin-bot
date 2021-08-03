@@ -20,7 +20,7 @@ Group Admin &amp; Multipurpose Telegram bot
 
     -   **Set Welcome Message**
 
-        Use `/setwelcome <message>` to set a welcome message to new users. You can use `{NAME}`, `{USERNAME}` and `{ID}` to refer to the user's name, username and id, respectively. Furthermore, if you need to add buttons that leads to URLs, use `{BUTTON: button title, https://your-url.com}`.
+        Use `/setwelcome <message>` to set a welcome message to new users. You can use `$NAME`, `$USERNAME` and `$ID` to refer to the user's name, username and id, respectively. Furthermore, if you need to add buttons that leads to URLs, use `$BUTTON{button title; https://your-url.com}`.
 
     -   **Add custom command**
 

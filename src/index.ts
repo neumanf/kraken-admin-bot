@@ -1,31 +1,15 @@
-require("dotenv").config({ path: __dirname + "/../.env" });
+require("dotenv").config();
 
-import express, { Request, Response } from "express";
+import actions from "./actions";
+import commands from "./commands";
+import bot from "./core/bot";
+import events from "./events";
+import { development, production } from "./utils/launch";
 
-import { bot } from "./core/bot/bot";
-import { setupCommands } from "./commands";
-import { setupActions } from "./actions";
-import { setupEvents } from "./events";
+commands(bot);
+actions(bot);
+events(bot);
 
-setupCommands(bot);
-setupActions(bot);
-setupEvents(bot);
+process.env.NODE_ENV === "development" ? development(bot) : production(bot);
 
-(() => {
-    if (process.env.NODE_ENV === "production") {
-        bot.telegram.setWebhook(
-            `${process.env.DEPLOY_URL}${process.env.SECRET_PATH}`
-        );
-
-        const app = express();
-
-        app.use(bot.webhookCallback(process.env.SECRET_PATH as string));
-        app.get("/", (req: Request, res: Response) => res.send("Hello world"));
-        app.listen(parseInt(process.env.PORT as string), () =>
-            console.log(`[SERVER] Bot running on ${process.env.PORT} port.`)
-        );
-    } else {
-        console.log("[SERVER] Bot running via polling");
-        bot.launch();
-    }
-})();
+export {};

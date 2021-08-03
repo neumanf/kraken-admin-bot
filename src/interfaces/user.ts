@@ -1,7 +1,8 @@
-export interface User {
+import mongoose from "mongoose";
+
+export interface IUser extends mongoose.Document {
     id: number;
-    is_bot: boolean;
-    first_name: string;
-    username?: string;
-    language_code?: string;
+    warns?: number;
+    createdAt: Date;
+    modifiedAt: Date;
 }

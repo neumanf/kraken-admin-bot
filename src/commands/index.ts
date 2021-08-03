@@ -1,51 +1,33 @@
-import { Telegraf } from "telegraf/typings/telegraf";
+import { Bot } from "grammy";
+
+import isAdmin from "../middlewares/admin";
 import { ExtendedContext } from "../core/bot/context";
-import { isAdmin } from "../middlewares/admin";
-import { banUser } from "./ban";
-import {
-    addCustomCommand,
-    deleteCustomCommand,
-    getCustomCommands,
-} from "./custom_commands";
-import { kickUser } from "./kick";
-import { translateText } from "./translate";
-import { warnUser } from "./warn";
-import { setWelcomeMessage } from "./welcome";
+import translate from "./translate";
+import ban from "./ban";
+import warn from "./warn";
+import kick from "./kick";
+import isGroup from "../middlewares/group";
+import { addCustomCommand, deleteCustomCommand, getCustomCommands } from "./customCommands";
+import setwelcome from "./setWelcome";
 
-export const setupCommands = (bot: Telegraf<ExtendedContext>) => {
-    bot.command("ping", isAdmin, (ctx) => ctx.replyToMessage("Pong!"));
+const commands = (bot: Bot<ExtendedContext>): void => {
+    bot.command("ping", (ctx) => ctx.replyToMessage("Pong!"));
 
-    bot.hears(/^\/warn\s?(.*)$/, isAdmin, (ctx) =>
-        warnUser(ctx, ctx?.message?.reply_to_message?.from)
-    );
+    bot.hears(/\/translate\s?(\w+)?/, translate);
 
-    bot.hears(/^\/ban\s?(.*)$/, isAdmin, (ctx) =>
-        banUser(ctx, ctx?.message?.reply_to_message?.from)
-    );
+    bot.hears(/^\/ban\s?(.*)$/, isGroup, isAdmin, (ctx) => ban(ctx, ctx?.message?.reply_to_message?.from));
 
-    bot.hears(/^\/kick\s?(.*)$/, isAdmin, (ctx) =>
-        kickUser(ctx, ctx?.message?.reply_to_message?.from)
-    );
+    bot.hears(/^\/warn\s?(.*)$/, isGroup, isAdmin, (ctx) => warn(ctx, ctx?.message?.reply_to_message?.from));
 
-    bot.hears(
-        /^\/setwelcome\s(.*)$/,
-        isAdmin,
-        async (ctx) => await setWelcomeMessage(ctx)
-    );
+    bot.hears(/^\/kick\s?(.*)$/, isGroup, isAdmin, (ctx) => kick(ctx, ctx?.message?.reply_to_message?.from));
 
-    bot.hears(
-        /\/addcom (\w+) (.*)/,
-        isAdmin,
-        async (ctx) => await addCustomCommand(ctx)
-    );
+    bot.hears(/^\/setwelcome (.*)/gms, isGroup, isAdmin, setwelcome);
 
-    bot.hears(
-        /\/delcom (\w+)/,
-        isAdmin,
-        async (ctx) => await deleteCustomCommand(ctx)
-    );
+    bot.hears(/\/addcom (\w+) (.*)/gms, isGroup, isAdmin, addCustomCommand);
 
-    bot.command("commands", async (ctx) => await getCustomCommands(ctx));
+    bot.hears(/\/delcom (\w+)/, isGroup, isAdmin, deleteCustomCommand);
 
-    bot.hears(/\/translate\s?(\w+)?/, async (ctx) => await translateText(ctx));
+    bot.command("commands", isGroup, getCustomCommands);
 };
+
+export default commands;
