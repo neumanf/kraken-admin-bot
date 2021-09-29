@@ -43,9 +43,11 @@ Group Admin &amp; Multipurpose Telegram bot
 ## Setup
 
 ```bash
-git clone https://github.com/neumanf/kraken-admin-bot
-cd kraken-admin-bot
-npm install
-mv .env.example .env # Fill in the fields
-npm run dev
+# Install the dependencies
+$ npm install
+# Copy the .env example to a new file
+# Make sure to define your variables in the new file before running
+$ cp .env.example .env
+# Run the bot via polling
+$ npm run dev
 ```
