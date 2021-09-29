@@ -1,7 +1,7 @@
 import { getWarns, updateWarns } from "../../core/db/warn";
 import { ExtendedContext } from "../../core/bot/context";
 import { TelegramUser } from "../../interfaces/telegramUser";
-import { ALERT_ICON, INFO_ICON } from "../../utils/consts";
+import { ALERT_ICON, INFO_ICON, STOP_ICON } from "../../utils/consts";
 
 const unwarn = async (ctx: ExtendedContext, user: TelegramUser): Promise<void | undefined> => {
     if (!user) return;
@@ -10,11 +10,15 @@ const unwarn = async (ctx: ExtendedContext, user: TelegramUser): Promise<void | 
         const userWarns = await getWarns(user.id);
 
         if (userWarns > 0) {
-            await updateWarns(user.id, userWarns - 1);
+            const updatedWarns = await updateWarns(user.id, userWarns - 1);
 
-            ctx.reply(`${INFO_ICON} Warn removed.`);
+            if (updatedWarns) {
+                await ctx.reply(`${INFO_ICON} Warn removed.`);
+            } else {
+                await ctx.reply(`${STOP_ICON} Error while trying to remove the warn.`);
+            }
         } else {
-            ctx.reply(`${INFO_ICON} This user has no warns.`);
+            await ctx.reply(`${INFO_ICON} This user has no warns.`);
         }
     } catch (e) {
         console.error(e);

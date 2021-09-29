@@ -1,14 +1,15 @@
-import { Api, Context } from "grammy";
+import { Api, Context, RawApi } from "grammy";
 import type { Update, UserFromGetMe } from "@grammyjs/types";
 import { Message } from "grammy/out/platform";
 import { Other } from "grammy/out/core/api";
+import { Methods } from "grammy/out/core/client";
 
 export class ExtendedContext extends Context {
     constructor(update: Update, api: Api, me: UserFromGetMe) {
         super(update, api, me);
     }
 
-    async replyToMessage(message: string, other?: Other<"sendMessage", "text"> | undefined): Promise<Message.TextMessage | undefined> {
+    async replyToMessage(message: string, other?: Other<RawApi, Methods<RawApi>> | undefined): Promise<Message.TextMessage | undefined> {
         if (this.message && this.message.text) {
             return await this.reply(message, {
                 ...other,

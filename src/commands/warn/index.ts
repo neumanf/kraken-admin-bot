@@ -11,11 +11,11 @@ const warn = async (ctx: ExtendedContext, user: TelegramUser | undefined): Promi
         try {
             await updateWarns(user.id, 0);
 
-            ctx.replyToMessage(`${INFO_ICON} [${user.first_name}](tg://user?id=${user.id})'s warns have been reseted\\.`, {
+            await ctx.replyToMessage(`${INFO_ICON} [${user.first_name}](tg://user?id=${user.id})'s warns have been reseted\\.`, {
                 parse_mode: "MarkdownV2",
             });
         } catch (e) {
-            ctx.replyToMessage(`Error: Could not reset ${user.first_name}'s warns\.`);
+            await ctx.replyToMessage(`Error: Could not reset ${user.first_name}'s warns\.`);
         }
 
         return;
