@@ -22,6 +22,10 @@ Group Admin &amp; Multipurpose Telegram bot
 
         Use `/setwelcome <message>` to set a welcome message to new users. You can use `$NAME`, `$USERNAME` and `$ID` to refer to the user's name, username and id, respectively. Furthermore, if you need to add buttons that leads to URLs, use `$BUTTON{button title; https://your-url.com}`.
 
+    -   **Set banned stickerpacks**
+
+        Use `/setbannedstickerpacks <sticker_pack_name>` to ban stickerpacks. Ban multiple packs at once by separating them by a comma, e.g: `/setbannedstickerpacks pack_name_1, pack_name_2, pack_name_3`.
+
     -   **Add custom command**
 
         Use `/addcom <name> <content>` to add a custom command. You can also create a command with a counter by using `$COUNTER` on the message.

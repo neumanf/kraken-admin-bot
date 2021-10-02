@@ -2,7 +2,7 @@ import { InlineKeyboard } from "grammy";
 import { ExtendedContext } from "../../core/bot/context";
 import { getSettings } from "../../core/db/setting";
 
-const newChatMembers = async (ctx: ExtendedContext): Promise<void> => {
+const handleNewChatMembers = async (ctx: ExtendedContext): Promise<void> => {
     const newMembers = ctx.message?.new_chat_members ?? [];
     const chatId = ctx.message?.chat.id;
 
@@ -34,4 +34,4 @@ const newChatMembers = async (ctx: ExtendedContext): Promise<void> => {
     }
 };
 
-export default newChatMembers;
+export default handleNewChatMembers;

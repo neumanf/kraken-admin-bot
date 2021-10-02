@@ -1,7 +1,7 @@
 import { ISetting } from "src/interfaces/setting";
 import Setting from "../../models/setting";
 
-const setSetting = async (_groupId: number, setting: string, value: string | number): Promise<ISetting | null> => {
+const setSetting = async (_groupId: number, setting: string, value: unknown): Promise<ISetting | null> => {
     return await Setting.findOneAndUpdate(
         { groupId: _groupId },
         {

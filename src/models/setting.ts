@@ -14,6 +14,11 @@ const settingSchema = new Schema(
             type: String,
             default: "",
         },
+        bannedStickerPacks: {
+            type: Array,
+            of: String,
+            default: [],
+        },
     },
     { timestamps: true },
 );

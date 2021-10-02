@@ -9,6 +9,7 @@ import kick from "./kick";
 import isGroup from "../middlewares/group";
 import { addCustomCommand, deleteCustomCommand, getCustomCommands } from "./customCommands";
 import setwelcome from "./setWelcome";
+import setBannedStickerpacks from "./setBannedStickerpacks";
 
 const commands = (bot: Bot<ExtendedContext>): void => {
     bot.command("ping", (ctx) => ctx.replyToMessage("Pong!"));
@@ -22,6 +23,8 @@ const commands = (bot: Bot<ExtendedContext>): void => {
     bot.hears(/^\/kick\s?(.*)$/, isGroup, isAdmin, (ctx) => kick(ctx, ctx?.message?.reply_to_message?.from));
 
     bot.hears(/^\/setwelcome (.*)/gms, isGroup, isAdmin, setwelcome);
+
+    bot.hears(/^\/setbannedstickerpacks (.*)/gms, isGroup, isAdmin, setBannedStickerpacks);
 
     bot.hears(/\/addcom (\w+) (.*)/gms, isGroup, isAdmin, addCustomCommand);
 
