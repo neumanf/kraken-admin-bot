@@ -1,14 +1,15 @@
 require("dotenv").config();
 
-import actions from "./actions";
-import commands from "./commands";
 import bot from "./core/bot";
-import events from "./events";
 import { development, production } from "./utils/launch";
 
-commands(bot);
-actions(bot);
-events(bot);
+import actions from "./actions";
+import commands from "./commands";
+import events from "./events";
+
+bot.use(commands);
+bot.use(actions);
+bot.use(events);
 
 process.env.NODE_ENV === "development" ? development(bot) : production(bot);
 

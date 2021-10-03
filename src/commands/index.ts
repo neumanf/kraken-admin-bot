@@ -1,36 +1,41 @@
-import { Bot } from "grammy";
-
-import isAdmin from "../middlewares/admin";
+import { Composer } from "grammy";
 import { ExtendedContext } from "../core/bot/context";
+
 import translate from "./translate";
 import ban from "./ban";
 import warn from "./warn";
 import kick from "./kick";
-import isGroup from "../middlewares/group";
 import { addCustomCommand, deleteCustomCommand, getCustomCommands } from "./customCommands";
 import setwelcome from "./setWelcome";
 import setBannedStickerpacks from "./setBannedStickerpacks";
 
-const commands = (bot: Bot<ExtendedContext>): void => {
-    bot.command("ping", (ctx) => ctx.replyToMessage("Pong!"));
+const composer = new Composer<ExtendedContext>();
 
-    bot.hears(/\/translate\s?(\w+)?/, translate);
+const isGroup = composer.filter((ctx) => ["group", "supergroup"].includes(ctx.chat?.type as string));
 
-    bot.hears(/^\/ban\s?(.*)$/, isGroup, isAdmin, (ctx) => ban(ctx, ctx?.message?.reply_to_message?.from));
+const isAdmin = composer.filter(async (ctx) => {
+    const user = await ctx.getAuthor();
+    return user.status === "creator" || user.status === "administrator";
+});
 
-    bot.hears(/^\/warn\s?(.*)$/, isGroup, isAdmin, (ctx) => warn(ctx, ctx?.message?.reply_to_message?.from));
+composer.command("ping", (ctx) => ctx.replyToMessage("Pong!"));
 
-    bot.hears(/^\/kick\s?(.*)$/, isGroup, isAdmin, (ctx) => kick(ctx, ctx?.message?.reply_to_message?.from));
+composer.hears(/^\/translate\s?(\w+)?/, translate);
 
-    bot.hears(/^\/setwelcome (.*)/gms, isGroup, isAdmin, setwelcome);
+isAdmin.hears(/^\/ban\s?(.*)$/, (ctx) => ban(ctx, ctx?.message?.reply_to_message?.from));
 
-    bot.hears(/^\/setbannedstickerpacks (.*)/gms, isGroup, isAdmin, setBannedStickerpacks);
+isAdmin.hears(/^\/warn\s?(.*)$/, (ctx) => warn(ctx, ctx?.message?.reply_to_message?.from));
 
-    bot.hears(/\/addcom (\w+) (.*)/gms, isGroup, isAdmin, addCustomCommand);
+isAdmin.hears(/^\/kick\s?(.*)$/, (ctx) => kick(ctx, ctx?.message?.reply_to_message?.from));
 
-    bot.hears(/\/delcom (\w+)/, isGroup, isAdmin, deleteCustomCommand);
+isAdmin.hears(/^\/setwelcome (.*)/gms, setwelcome);
 
-    bot.command("commands", isGroup, getCustomCommands);
-};
+isAdmin.hears(/^\/setbannedstickerpacks (.*)/gms, setBannedStickerpacks);
 
-export default commands;
+isAdmin.hears(/^\/addcom (\w+) (.*)/gms, addCustomCommand);
+
+isAdmin.hears(/^\/delcom (\w+)/, deleteCustomCommand);
+
+isGroup.command("commands", getCustomCommands);
+
+export default composer;

@@ -1,26 +1,30 @@
-import { Bot } from "grammy";
-import isAdmin from "../middlewares/admin";
+import { Composer } from "grammy";
 
 import { ExtendedContext } from "../core/bot/context";
 import unban from "./unban";
 import unwarn from "./unwarn";
 
-const actions = (bot: Bot<ExtendedContext>): void => {
-    bot.callbackQuery("unban", isAdmin, async (ctx) => {
-        const entities = ctx.callbackQuery.message?.entities;
+const composer = new Composer<ExtendedContext>();
 
-        if (entities?.[0].type === "text_mention") {
-            return await unban(ctx, entities?.[0]?.user);
-        }
-    });
+const isAdmin = composer.filter(async (ctx) => {
+    const user = await ctx.getAuthor();
+    return user.status === "creator" || user.status === "administrator";
+});
 
-    bot.callbackQuery("unwarn", isAdmin, async (ctx) => {
-        const entities = ctx.callbackQuery.message?.entities;
+isAdmin.callbackQuery("unban", async (ctx) => {
+    const entities = ctx.callbackQuery.message?.entities;
 
-        if (entities?.[0].type === "text_mention") {
-            return await unwarn(ctx, entities?.[0]?.user);
-        }
-    });
-};
+    if (entities?.[0].type === "text_mention") {
+        return await unban(ctx, entities?.[0]?.user);
+    }
+});
 
-export default actions;
+isAdmin.callbackQuery("unwarn", async (ctx) => {
+    const entities = ctx.callbackQuery.message?.entities;
+
+    if (entities?.[0].type === "text_mention") {
+        return await unwarn(ctx, entities?.[0]?.user);
+    }
+});
+
+export default composer;
