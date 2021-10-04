@@ -3,7 +3,8 @@ import { setSetting } from "../../core/db/setting";
 import { ALERT_ICON, SUCCESS_ICON } from "../../utils/consts";
 
 const setwelcome = async (ctx: ExtendedContext): Promise<void> => {
-    const message = ctx?.match?.[1] ?? "";
+    const message = ctx?.message?.text?.trim() ?? "";
+    const message_id = ctx.message?.reply_to_message?.message_id;
     const chatId = ctx.chat?.id;
 
     if (message.trim().length === 0) {
@@ -12,10 +13,9 @@ const setwelcome = async (ctx: ExtendedContext): Promise<void> => {
     }
 
     try {
-        if (chatId) {
+        if (chatId && message_id) {
             await setSetting(chatId, "welcomeMessage", message);
-
-            await ctx.reply(`${SUCCESS_ICON} Welcome message changed successfully.`);
+            await ctx.api.editMessageText(chatId, message_id, `${SUCCESS_ICON} Sticker packs banned successfully.`);
         }
     } catch (e) {
         console.error(e);
