@@ -1,5 +1,5 @@
 import { InlineKeyboard } from "grammy";
-import { ExtendedContext } from "src/core/bot/context";
+import { ExtendedContext } from "../../core/bot/context";
 import { TelegramUser } from "../../interfaces/telegramUser";
 import { ALERT_ICON, STOP_ICON, SUCCESS_ICON } from "../../utils/consts";
 

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ISetting } from "src/interfaces/setting";
+import { ISetting } from "../interfaces/setting";
 
 const { Schema } = mongoose;
 
