@@ -18,13 +18,9 @@ Group Admin &amp; Multipurpose Telegram bot
 
         Reply to the user message with `/ban [reason]`.
 
-    -   **Set Welcome Message**
+    -   **Settings**
 
-        Use `/setwelcome <message>` to set a welcome message to new users. You can use `$NAME`, `$USERNAME` and `$ID` to refer to the user's name, username and id, respectively. Furthermore, if you need to add buttons that leads to URLs, use `$BUTTON{button title; https://your-url.com}`.
-
-    -   **Set banned stickerpacks**
-
-        Use `/setbannedstickerpacks <sticker_pack_name>` to ban stickerpacks. Ban multiple packs at once by separating them by a comma, e.g: `/setbannedstickerpacks pack_name_1, pack_name_2, pack_name_3`.
+        Use `/settings` to configure all the settings. Available settings: welcome message and ban stickerpacks.
 
     -   **Add custom command**
 

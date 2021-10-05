@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ICommand } from "src/interfaces/command";
+import { ICommand } from "../interfaces/command";
 
 const { Schema } = mongoose;
 

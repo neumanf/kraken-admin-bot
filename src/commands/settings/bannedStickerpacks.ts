@@ -3,10 +3,10 @@ import { setSetting } from "../../core/db/setting";
 import { ALERT_ICON, SUCCESS_ICON } from "../../utils/consts";
 
 const setBannedStickerpacks = async (ctx: ExtendedContext): Promise<void> => {
-    const message = ctx?.match?.[1] ?? "";
+    const message = ctx?.message?.text?.trim() ?? "";
+    const message_id = ctx.message?.reply_to_message?.message_id;
     const stickerpacks: string[] = message.split(",").map(Function.prototype.call, String.prototype.trim) ?? [];
     const chatId = ctx.chat?.id;
-    console.log(stickerpacks);
 
     if (message.trim().length === 0) {
         await ctx.reply(`${ALERT_ICON} Message is required`);
@@ -14,10 +14,9 @@ const setBannedStickerpacks = async (ctx: ExtendedContext): Promise<void> => {
     }
 
     try {
-        if (chatId) {
+        if (chatId && message_id) {
             await setSetting(chatId, "bannedStickerPacks", stickerpacks);
-
-            await ctx.reply(`${SUCCESS_ICON} Sticker packs banned successfully.`);
+            await ctx.api.editMessageText(chatId, message_id, `${SUCCESS_ICON} Sticker packs banned successfully.`);
         }
     } catch (e) {
         console.error(e);

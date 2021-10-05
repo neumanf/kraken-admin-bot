@@ -5,9 +5,8 @@ import translate from "./translate";
 import ban from "./ban";
 import warn from "./warn";
 import kick from "./kick";
-import { addCustomCommand, deleteCustomCommand, getCustomCommands } from "./customCommands";
-import setwelcome from "./setWelcome";
-import setBannedStickerpacks from "./setBannedStickerpacks";
+import settings from "./settings";
+import * as customCommands from "./customCommands";
 
 const composer = new Composer<ExtendedContext>();
 
@@ -28,14 +27,12 @@ isAdmin.hears(/^\/warn\s?(.*)$/, (ctx) => warn(ctx, ctx?.message?.reply_to_messa
 
 isAdmin.hears(/^\/kick\s?(.*)$/, (ctx) => kick(ctx, ctx?.message?.reply_to_message?.from));
 
-isAdmin.hears(/^\/setwelcome (.*)/gms, setwelcome);
+isAdmin.hears(/^\/addcom (\w+) (.*)/gms, customCommands.addCustomCommand);
 
-isAdmin.hears(/^\/setbannedstickerpacks (.*)/gms, setBannedStickerpacks);
+isAdmin.hears(/^\/delcom (\w+)/, customCommands.deleteCustomCommand);
 
-isAdmin.hears(/^\/addcom (\w+) (.*)/gms, addCustomCommand);
+isGroup.command("commands", customCommands.getCustomCommands);
 
-isAdmin.hears(/^\/delcom (\w+)/, deleteCustomCommand);
-
-isGroup.command("commands", getCustomCommands);
+isAdmin.use(settings);
 
 export default composer;
