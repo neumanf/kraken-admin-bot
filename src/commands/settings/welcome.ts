@@ -15,7 +15,7 @@ const setwelcome = async (ctx: ExtendedContext): Promise<void> => {
     try {
         if (chatId && message_id) {
             await setSetting(chatId, "welcomeMessage", message);
-            await ctx.api.editMessageText(chatId, message_id, `${SUCCESS_ICON} Sticker packs banned successfully.`);
+            await ctx.api.editMessageText(chatId, message_id, `${SUCCESS_ICON} Welcome message changed successfully.`);
         }
     } catch (e) {
         console.error(e);

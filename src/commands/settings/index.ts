@@ -14,7 +14,7 @@ const settingsMenu = new MenuTemplate<ExtendedContext>(() => "⚙️ Settings");
 const welcomeMessage = new StatelessQuestion("welcome_message", setwelcome);
 const welcomeMenu = new MenuTemplate<ExtendedContext>((ctx) => {
     const text =
-        "*👋 Welcome message*\n\nYou can use `$NAME`, `$USERNAME` and `$ID` to refer to the user's name, username and id, respectively. Furthermore, if you need to add buttons that leads to URLs, use `$BUTTON{button title; https://your-url.com}`.\ne.g: `Hello, $NAME! Check out my Github repo below. $BUTTON{Github; htpts://github.com/neumanf/kraken-admin-bot}`\n\nDefine a new welcome message:".replace(
+        "*👋 Welcome message*\n\nYou can use `$NAME`, `$USERNAME` and `$ID` to refer to the user's name, username and id, respectively. Furthermore, if you need to add buttons that leads to URLs, use `$BUTTON{button title; https://your-url.com}`.\ne.g: `Hello, $NAME! Check out my Github repo below. $BUTTON{Github; https://github.com/neumanf/kraken-admin-bot}`\n\nDefine a new welcome message:".replace(
             /\./g,
             "\\.",
         );
