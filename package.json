@@ -8,7 +8,11 @@
         "build": "tsc",
         "dev": "nodemon src/index.ts",
         "lint": "eslint . --cache --ext .ts,.js",
-        "format": "prettier --write 'src/**/*.ts'"
+        "format": "prettier --write 'src/**/*.ts'",
+        "up": "mkdir -p data && docker-compose up -d",
+        "postup": "npm run dev",
+        "stop": "docker-compose stop",
+        "down": "docker-compose down"
     },
     "author": "neumanf",
     "license": "MIT",

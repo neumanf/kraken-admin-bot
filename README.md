@@ -40,7 +40,7 @@ Group Admin &amp; Multipurpose Telegram bot
 
         Use `/commands` to show all custom commands available.
 
-## Setup
+## Development
 
 ```bash
 # Install the dependencies
@@ -50,4 +50,6 @@ $ npm install
 $ cp .env.example .env
 # Run the bot via polling
 $ npm run dev
+# Or run via docker
+$ npm run up
 ```
