@@ -7,7 +7,6 @@ const commandSchema = new Schema(
     {
         groupId: {
             type: Number,
-            unique: true,
             required: true,
         },
         name: {
