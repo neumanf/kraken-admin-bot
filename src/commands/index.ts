@@ -13,8 +13,13 @@ const composer = new Composer<ExtendedContext>();
 const isGroup = composer.filter((ctx) => ["group", "supergroup"].includes(ctx.chat?.type as string));
 
 const isAdmin = composer.filter(async (ctx) => {
-    const user = await ctx.getAuthor();
-    return user.status === "creator" || user.status === "administrator";
+    try {
+        const user = await ctx.getAuthor();
+        return user.status === "creator" || user.status === "administrator";
+    } catch (error) {
+        console.error(error);
+    }
+    return false;
 });
 
 composer.command("ping", (ctx) => ctx.replyToMessage("Pong!"));
