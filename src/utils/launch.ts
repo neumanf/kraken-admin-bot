@@ -26,7 +26,6 @@ const production = async (bot: Bot<ExtendedContext>): Promise<void> => {
 const development = async (bot: Bot<ExtendedContext>): Promise<void> => {
     try {
         await connectToDB();
-        await bot.api.deleteWebhook();
         console.log("[SERVER] Bot starting polling");
         await bot.start();
     } catch (e) {

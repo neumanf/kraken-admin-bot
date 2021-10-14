@@ -5,9 +5,9 @@ import { GrammyError, HttpError } from "grammy";
 import bot from "./core/bot";
 import { development, production } from "./utils/launch";
 
-import actions from "./actions";
-import commands from "./commands";
-import events from "./events";
+import actions from "./controllers/actions";
+import commands from "./controllers/commands";
+import events from "./controllers/events";
 
 bot.use(commands);
 bot.use(actions);
