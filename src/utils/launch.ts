@@ -1,12 +1,12 @@
 import { Bot, webhookCallback } from "grammy";
 import express from "express";
 
-import connectToDB from "../core/db/connect";
 import { ExtendedContext } from "../core/bot/context";
+import { Database } from "../core/db";
 
 export class Launch {
     static async production(bot: Bot<ExtendedContext>): Promise<express.Application> {
-        await connectToDB();
+        await Database.connect();
 
         const { WEBHOOK_URL, SECRET_PATH, PORT } = process.env;
         const app = express();
@@ -23,8 +23,9 @@ export class Launch {
     }
 
     static async development(bot: Bot<ExtendedContext>): Promise<void> {
-        await connectToDB();
+        await Database.connect();
 
+        await bot.api.deleteWebhook();
         console.log("[SERVER] Bot starting polling");
         await bot.start();
     }

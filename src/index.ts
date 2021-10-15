@@ -1,6 +1,4 @@
-const { NODE_ENV } = process.env;
-
-if (NODE_ENV !== "production") require("dotenv").config();
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 import { GrammyError, HttpError } from "grammy";
 
@@ -28,6 +26,6 @@ bot.catch((err) => {
     }
 });
 
-NODE_ENV === "development" ? Launch.development(bot) : Launch.production(bot);
+process.env.NODE_ENV === "development" ? Launch.development(bot) : Launch.production(bot);
 
 export {};
