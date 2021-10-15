@@ -1,9 +1,11 @@
-if (process.env.NODE_ENV !== "production") require("dotenv").config();
+const { NODE_ENV } = process.env;
+
+if (NODE_ENV !== "production") require("dotenv").config();
 
 import { GrammyError, HttpError } from "grammy";
 
 import bot from "./core/bot";
-import { development, production } from "./utils/launch";
+import { Launch } from "./utils/launch";
 
 import actions from "./controllers/actions";
 import commands from "./controllers/commands";
@@ -26,6 +28,6 @@ bot.catch((err) => {
     }
 });
 
-process.env.NODE_ENV === "development" ? development(bot) : production(bot);
+NODE_ENV === "development" ? Launch.development(bot) : Launch.production(bot);
 
 export {};
