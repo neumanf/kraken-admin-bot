@@ -11,9 +11,13 @@ export class CustomCommandController {
     }
 
     async handle(ctx: ExtendedContext): Promise<Composer<Context>> {
-        const customCommands = await this.customCommandService.findAll(Number(ctx?.message?.chat?.id));
-        const commandsList = new RegExp(`^\/(${customCommands.map((command: ICommand) => command.name).join("|")})$`);
         const composer = new Composer();
+
+        const chatId = ctx?.message?.chat?.id;
+        if (!chatId) return composer;
+
+        const customCommands = await this.customCommandService.findAll(chatId);
+        const commandsList = new RegExp(`^\/(${customCommands.map((command: ICommand) => command.name).join("|")})$`);
 
         composer.hears(commandsList, async (ctx: Context) => {
             if (ctx.message?.text?.[0] === "/") {

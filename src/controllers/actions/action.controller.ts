@@ -9,7 +9,7 @@ export class ActionHandler {
             const entities = ctx?.callbackQuery?.message?.entities;
 
             if (entities?.[0].type === "text_mention") {
-                return await actionController.handle(ctx, entities?.[0]?.user);
+                return actionController.handle(ctx, entities?.[0]?.user);
             }
         });
     }
