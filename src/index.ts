@@ -11,6 +11,8 @@ bot.use(commands);
 bot.use(actions);
 bot.use(events);
 
-process.env.NODE_ENV === "development" ? Launch.development(bot) : Launch.production(bot);
+const launch = new Launch(bot);
+
+process.env.NODE_ENV === "development" ? launch.development() : launch.production();
 
 export {};
