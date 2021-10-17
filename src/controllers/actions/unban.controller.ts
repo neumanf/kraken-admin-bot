@@ -6,10 +6,8 @@ import { AdminService } from "../../services/admin.service";
 import { ALERT_ICON, SUCCESS_ICON } from "../../utils/consts";
 
 export class UnBanController extends ActionController {
-    constructor(private AdminService: AdminService) {
+    constructor(private readonly AdminService: AdminService) {
         super();
-
-        this.AdminService = AdminService;
     }
 
     async handle(ctx: ExtendedContext, user: User): Promise<void> {

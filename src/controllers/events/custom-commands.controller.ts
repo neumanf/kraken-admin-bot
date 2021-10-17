@@ -6,9 +6,7 @@ import { ICommand } from "../../interfaces/command";
 import { STOP_ICON } from "../../utils/consts";
 
 export class CustomCommandController {
-    constructor(private customCommandService: CustomCommandService) {
-        this.customCommandService = customCommandService;
-    }
+    constructor(private readonly customCommandService: CustomCommandService) {}
 
     async handle(ctx: ExtendedContext): Promise<Composer<Context>> {
         const composer = new Composer();

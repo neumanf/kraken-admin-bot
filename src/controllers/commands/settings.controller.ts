@@ -10,10 +10,9 @@ import { ALERT_ICON, SUCCESS_ICON } from "../../utils/consts";
 export class SettingsController extends CommandController {
     private _composer: Composer<ExtendedContext>;
 
-    constructor(private settingsService: SettingsService) {
+    constructor(private readonly settingsService: SettingsService) {
         super();
 
-        this.settingsService = settingsService;
         this._composer = new Composer<ExtendedContext>();
 
         this.setWelcome = this.setWelcome.bind(this);

@@ -6,10 +6,8 @@ import { CommandController } from "./command.controller";
 import { CustomCommandService } from "../../services/custom-command.service";
 
 export class CustomCommandController extends CommandController {
-    constructor(private customCommandService: CustomCommandService) {
+    constructor(private readonly customCommandService: CustomCommandService) {
         super();
-
-        this.customCommandService = customCommandService;
     }
 
     async handle(ctx: ExtendedContext): Promise<void> {

@@ -5,10 +5,8 @@ import { SettingsService } from "../../services/settings.service";
 import { EventController } from "./event.controller";
 
 export class NewChatMemberController extends EventController {
-    constructor(private settingsService: SettingsService) {
+    constructor(private readonly settingsService: SettingsService) {
         super();
-
-        this.settingsService = settingsService;
     }
 
     async handle(ctx: ExtendedContext): Promise<void> {

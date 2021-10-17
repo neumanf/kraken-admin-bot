@@ -8,10 +8,8 @@ import { IValidatedData } from "../../interfaces/validated-data";
 import { User } from "@grammyjs/types";
 
 export class AdminController extends CommandController {
-    constructor(private AdminService: AdminService) {
+    constructor(private readonly AdminService: AdminService) {
         super();
-
-        this.AdminService = AdminService;
     }
 
     async handle(ctx: ExtendedContext): Promise<void> {
