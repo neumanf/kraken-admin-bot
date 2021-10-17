@@ -11,27 +11,25 @@ import { SettingsService } from "../../services/settings.service";
 import { TranslateController } from "./translate.controller";
 import { AdminController } from "./admin.controller";
 import { AdminService } from "../../services/admin.service";
+import { isGroup } from "../../helpers/filters/is-group.filter";
+import { isAdmin } from "../../helpers/filters/is-admin.filter";
 
 const composer = new Composer<ExtendedContext>();
 
-const isGroup = composer.filter((ctx) => ["group", "supergroup"].includes(ctx.chat?.type ?? ""));
-
-const isAdmin = composer.filter(async (ctx) => {
-    const { status } = await ctx.getAuthor().catch(() => ({ status: "" }));
-    return status === "creator" || status === "administrator";
-});
+const isGroupFilter = composer.filter(isGroup);
+const isAdminFilter = composer.filter(isAdmin);
 
 const commandHandler = new CommandHandler();
 
 commandHandler.register(["ping"], null, new PingController(), composer);
 commandHandler.register(["translate", "tr"], "(\\w+)?", new TranslateController(), composer);
-commandHandler.register(["commands"], null, new CustomCommandController(new CustomCommandService()), isGroup);
-commandHandler.register(["addcom", "addcommand"], "(\\w+) (.*)", new CustomCommandController(new CustomCommandService()), isAdmin);
-commandHandler.register(["delcom", "deletecommand"], "(\\w+)", new CustomCommandController(new CustomCommandService()), isAdmin);
-commandHandler.register(["kick"], "(.*)?", new AdminController(new AdminService()), isAdmin);
-commandHandler.register(["warn"], "(.*)?", new AdminController(new AdminService()), isAdmin);
-commandHandler.register(["ban"], "(.*)?", new AdminController(new AdminService()), isAdmin);
+commandHandler.register(["kick"], "(.*)?", new AdminController(new AdminService()), isAdminFilter);
+commandHandler.register(["warn"], "(.*)?", new AdminController(new AdminService()), isAdminFilter);
+commandHandler.register(["ban"], "(.*)?", new AdminController(new AdminService()), isAdminFilter);
+commandHandler.register(["commands"], null, new CustomCommandController(new CustomCommandService()), isGroupFilter);
+commandHandler.register(["addcom", "addcommand"], "(\\w+) (.*)", new CustomCommandController(new CustomCommandService()), isAdminFilter);
+commandHandler.register(["delcom", "deletecommand"], "(\\w+)", new CustomCommandController(new CustomCommandService()), isAdminFilter);
 
-isAdmin.use(new SettingsController(new SettingsService()).composer);
+isAdminFilter.use(new SettingsController(new SettingsService()).composer);
 
 export default composer;

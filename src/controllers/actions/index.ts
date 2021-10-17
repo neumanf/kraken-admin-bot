@@ -5,17 +5,14 @@ import { ActionHandler } from "./action.controller";
 import { UnWarnController } from "./unwarn.controller";
 import { AdminService } from "../../services/admin.service";
 import { UnBanController } from "./unban.controller";
+import { isAdmin } from "../../helpers/filters/is-admin.filter";
 
 const composer = new Composer<ExtendedContext>();
-
-const isAdmin = composer.filter(async (ctx) => {
-    const { status } = await ctx.getAuthor().catch(() => ({ status: "" }));
-    return status === "creator" || status === "administrator";
-});
-
 const actionHandler = new ActionHandler();
 
-actionHandler.register("unwarn", new UnWarnController(new AdminService()), isAdmin);
-actionHandler.register("unban", new UnBanController(new AdminService()), isAdmin);
+const isAdminFilter = composer.filter(isAdmin);
+
+actionHandler.register("unwarn", new UnWarnController(new AdminService()), isAdminFilter);
+actionHandler.register("unban", new UnBanController(new AdminService()), isAdminFilter);
 
 export default composer;
