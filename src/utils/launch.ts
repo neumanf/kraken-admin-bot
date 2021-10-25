@@ -12,12 +12,12 @@ export class Launch {
         const app = express();
 
         app.use(express.json());
-        app.use(`/${SECRET_PATH}`, webhookCallback(this.bot, "express"));
+        app.use(`/${SECRET_PATH}`, webhookCallback(this.bot));
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-            console.error("Error:", err);
-            next();
+            console.error("Unknown error:", err);
+            return res.status(200).send();
         });
 
         await this.connectToDatabase(() => {

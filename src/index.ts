@@ -12,7 +12,6 @@ bot.use(actions);
 bot.use(events);
 
 const launch = new Launch(bot);
-
 process.env.NODE_ENV === "development" ? launch.development() : launch.production();
 
 export {};
