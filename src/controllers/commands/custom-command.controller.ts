@@ -13,15 +13,15 @@ export class CustomCommandController extends CommandController {
     async handle(ctx: ExtendedContext): Promise<void> {
         switch (ctx.match?.[1]) {
             case "commands":
-                this.get(ctx);
+                await this.get(ctx);
                 break;
             case "addcom":
             case "addcommand":
-                this.add(ctx);
+                await this.add(ctx);
                 break;
             case "delcom":
             case "deletecommand":
-                this.delete(ctx);
+                await this.delete(ctx);
                 break;
             default:
                 break;

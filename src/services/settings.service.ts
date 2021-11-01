@@ -3,7 +3,7 @@ import Setting from "../models/setting.model";
 
 export class SettingsService {
     async set(groupId: number, setting: string, value: unknown): Promise<ISetting | null> {
-        return await Setting.findOneAndUpdate(
+        return Setting.findOneAndUpdate(
             { groupId },
             {
                 $set: {
@@ -15,6 +15,6 @@ export class SettingsService {
     }
 
     async get(groupId: number): Promise<ISetting | null> {
-        return await Setting.findOne({ groupId });
+        return Setting.findOne({ groupId });
     }
 }

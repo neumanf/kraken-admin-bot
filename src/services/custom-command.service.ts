@@ -8,7 +8,7 @@ export class CustomCommandService {
     }
 
     async update(groupId: number, name: string, value: string): Promise<ICommand | null> {
-        return await Command.findOneAndUpdate(
+        return Command.findOneAndUpdate(
             { name, groupId },
             {
                 $set: {
@@ -22,10 +22,10 @@ export class CustomCommandService {
     }
 
     async delete(groupId: number, name: string): Promise<IDeleteOne> {
-        return await Command.deleteOne({ name, groupId });
+        return Command.deleteOne({ name, groupId });
     }
 
     async updateCounter(name: string, counter: number): Promise<ICommand | null> {
-        return await Command.findOneAndUpdate({ name }, { $set: { counter: counter + 1 } });
+        return Command.findOneAndUpdate({ name }, { $set: { counter: counter + 1 } });
     }
 }

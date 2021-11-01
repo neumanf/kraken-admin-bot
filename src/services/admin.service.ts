@@ -12,6 +12,6 @@ export class AdminService {
     }
 
     async updateWarns(id: number, value: number): Promise<IUser | null> {
-        return await User.findOneAndUpdate({ id }, { $set: { warns: value } }, { upsert: true });
+        return User.findOneAndUpdate({ id }, { $set: { warns: value } }, { upsert: true });
     }
 }

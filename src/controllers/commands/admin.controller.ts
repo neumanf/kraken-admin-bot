@@ -15,13 +15,13 @@ export class AdminController extends CommandController {
     async handle(ctx: ExtendedContext): Promise<void> {
         switch (ctx.match?.[1]) {
             case "kick":
-                this.handleKick(ctx);
+                await this.handleKick(ctx);
                 break;
             case "warn":
-                this.handleWarn(ctx);
+                await this.handleWarn(ctx);
                 break;
             case "ban":
-                this.handleBan(ctx);
+                await this.handleBan(ctx);
                 break;
             default:
                 break;

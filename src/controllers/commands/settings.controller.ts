@@ -8,7 +8,7 @@ import { SettingsService } from "../../services/settings.service";
 import { ALERT_ICON, SUCCESS_ICON } from "../../utils/consts";
 
 export class SettingsController extends CommandController {
-    private _composer: Composer<ExtendedContext>;
+    private readonly _composer: Composer<ExtendedContext>;
 
     constructor(private readonly settingsService: SettingsService) {
         super();
