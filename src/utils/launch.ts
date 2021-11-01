@@ -1,37 +1,64 @@
-import { Bot, webhookCallback } from "grammy";
-import express from "express";
+import { Bot, GrammyError, HttpError, webhookCallback } from "grammy";
+import express, { NextFunction, Request, Response } from "express";
 
-import connectToDB from "../core/db/connect";
 import { ExtendedContext } from "../core/bot/context";
+import { Database } from "../core/db";
 
-const production = async (bot: Bot<ExtendedContext>): Promise<void> => {
-    try {
-        await connectToDB();
+export class Launch {
+    constructor(private readonly bot: Bot<ExtendedContext>) {}
 
+    async production(): Promise<express.Application> {
         const { WEBHOOK_URL, SECRET_PATH, PORT } = process.env;
         const app = express();
 
         app.use(express.json());
-        app.use(`/${SECRET_PATH}`, webhookCallback(bot, "express"));
+        app.use(`/${SECRET_PATH}`, webhookCallback(this.bot));
 
-        app.listen(PORT, async () => {
-            await bot.api.setWebhook(`${WEBHOOK_URL}/${SECRET_PATH}`);
-            console.log(`[SERVER] Bot starting webhook`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+            console.error("Unknown error:", err);
+            return res.status(200).send();
         });
-    } catch (e) {
-        console.error(e);
-    }
-};
 
-const development = async (bot: Bot<ExtendedContext>): Promise<void> => {
-    try {
-        await connectToDB();
-        await bot.api.deleteWebhook();
-        console.log("[SERVER] Bot starting polling");
-        await bot.start();
-    } catch (e) {
-        console.error(e);
-    }
-};
+        await this.connectToDatabase(() => {
+            app.listen(PORT, async () => {
+                await this.bot.api.setWebhook(`${WEBHOOK_URL}/${SECRET_PATH}`, {
+                    drop_pending_updates: true,
+                });
+                console.log(`[SERVER] Bot starting webhook`);
+            });
+        });
 
-export { production, development };
+        return app;
+    }
+
+    async development(): Promise<void> {
+        this.bot.catch((err) => {
+            const ctx = err.ctx;
+            console.error(`Error while handling update ${ctx.update.update_id}:`);
+            const e = err.error;
+            if (e instanceof GrammyError) {
+                console.error("Error in request:", e.description);
+            } else if (e instanceof HttpError) {
+                console.error("Could not contact Telegram:", e);
+            } else {
+                console.error("Unknown error:", e);
+            }
+        });
+
+        await this.connectToDatabase(async () => {
+            await this.bot.api.deleteWebhook();
+            console.log("[SERVER] Bot starting polling");
+            await this.bot.start();
+        });
+    }
+
+    private async connectToDatabase(callback: () => void): Promise<void> {
+        await Database.connect()
+            .then(async () => {
+                console.log("[DB] Connected successfully.");
+                callback();
+            })
+            .catch((e) => console.error("[DB] Error:", e));
+    }
+}
