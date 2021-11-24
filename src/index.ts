@@ -3,9 +3,9 @@ if (process.env.NODE_ENV !== "production") require("dotenv").config();
 import bot from "./core/bot";
 import { Launch } from "./utils/launch";
 
-import actions from "./controllers/actions";
-import commands from "./controllers/commands";
-import events from "./controllers/events";
+import actions from "./modules/actions";
+import commands from "./modules/commands";
+import events from "./modules/events";
 
 bot.use(commands);
 bot.use(actions);
