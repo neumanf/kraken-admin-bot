@@ -1,4 +1,4 @@
-import { AdminService } from "../../../services/admin.service";
+import { AdminService } from "../admin.service";
 import { IValidatedData } from "../../../interfaces/validated-data";
 import { ExtendedContext } from "../../../core/bot/context";
 import { ALERT_ICON, INFO_ICON } from "../../../utils/consts";

@@ -1,12 +1,12 @@
 import { Composer, Context } from "grammy";
 
-import { CustomCommandService } from "../../../services/custom-command.service";
+import { CustomCommandsService } from "../custom-commands.service";
 import { ExtendedContext } from "../../../core/bot/context";
 import { ICommand } from "../../../interfaces/command";
 import { STOP_ICON } from "../../../utils/consts";
 
 export class CustomCommandEvent {
-    constructor(private readonly customCommandService: CustomCommandService) {}
+    constructor(private readonly customCommandService: CustomCommandsService) {}
 
     async handle(ctx: ExtendedContext): Promise<Composer<Context>> {
         const composer = new Composer();

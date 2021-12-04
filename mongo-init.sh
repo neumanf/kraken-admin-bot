@@ -1,5 +1,5 @@
 mongo -- "$MONGO_INITDB_DATABASE" << EOF
-    use admin
+    use admin;
     db.createUser({
         user: "$MONGO_INITDB_ROOT_USERNAME",
         pwd: "$MONGO_INITDB_ROOT_PASSWORD",
@@ -11,4 +11,5 @@ mongo -- "$MONGO_INITDB_DATABASE" << EOF
             "readWriteAnyDatabase"
         ],
     });
+    use kraken;
 EOF

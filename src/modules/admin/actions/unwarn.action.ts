@@ -1,7 +1,7 @@
 import { User } from "@grammyjs/types";
 
 import { BaseAction } from "../../../common/base.action";
-import { AdminService } from "../../../services/admin.service";
+import { AdminService } from "../../admin/admin.service";
 import { ALERT_ICON, INFO_ICON, STOP_ICON, SUCCESS_ICON } from "../../../utils/consts";
 import { ExtendedContext } from "../../../core/bot/context";
 

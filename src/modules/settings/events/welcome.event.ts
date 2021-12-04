@@ -1,10 +1,10 @@
 import { InlineKeyboard } from "grammy";
 
-import { EventController } from "../../../controllers/events/event.controller";
-import { SettingsService } from "../../../services/settings.service";
+import { BaseEvent } from "../../../common/base.event";
 import { ExtendedContext } from "../../../core/bot/context";
+import { SettingsService } from "../settings.service";
 
-export class WelcomeEvent extends EventController {
+export class WelcomeEvent extends BaseEvent {
     constructor(private readonly settingsService: SettingsService) {
         super();
     }

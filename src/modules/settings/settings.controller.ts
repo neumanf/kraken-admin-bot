@@ -4,9 +4,9 @@ import { createBackMainMenuButtons, MenuMiddleware, MenuTemplate } from "grammy-
 
 import { BaseCommand } from "../../common/base.command";
 import { ExtendedContext } from "../../core/bot/context";
-import { SettingsService } from "../../services/settings.service";
 import { WelcomeMessageHandler } from "./handlers/welcome.handler";
 import { BannedStickerpacksHandler } from "./handlers/banned-stickerpacks.handler";
+import { SettingsService } from "./settings.service";
 
 export class SettingsController extends BaseCommand {
     private readonly _composer: Composer<ExtendedContext>;

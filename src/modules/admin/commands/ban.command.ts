@@ -1,4 +1,4 @@
-import { AdminService } from "../../../services/admin.service";
+import { AdminService } from "../admin.service";
 import { ExtendedContext } from "../../../core/bot/context";
 import { ALERT_ICON } from "../../../utils/consts";
 import { AdminCommand } from "../admin.controller";
