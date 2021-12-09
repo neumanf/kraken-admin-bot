@@ -7,7 +7,6 @@ export class BannedStickerpacksHandler {
 
     async handle(ctx: ExtendedContext): Promise<void> {
         const message = ctx?.message?.text?.trim() ?? "";
-        const message_id = ctx.message?.reply_to_message?.message_id;
         const stickerpacks: string[] = message.split(",").map(Function.prototype.call, String.prototype.trim) ?? [];
         const chatId = ctx.chat?.id;
 
@@ -17,9 +16,10 @@ export class BannedStickerpacksHandler {
         }
 
         try {
-            if (chatId && message_id) {
+            // TODO: check if stickerpacks exists?
+            if (chatId) {
                 await this.settingsService.set(chatId, "bannedStickerPacks", stickerpacks);
-                await ctx.api.editMessageText(chatId, message_id, `${SUCCESS_ICON} Sticker packs banned successfully.`);
+                await ctx.reply(`${SUCCESS_ICON} Sticker packs banned successfully.`);
             }
         } catch (e) {
             console.error(e);

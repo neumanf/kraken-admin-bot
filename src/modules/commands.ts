@@ -15,19 +15,19 @@ import { DelComCommand } from "./custom-commands/commands/delcom.command";
 import { SettingsController } from "./settings/settings.controller";
 import { PingCommand } from "./misc/commands/ping.command";
 import { TranslateCommand } from "./misc/commands/translate.command";
-import { SettingsService } from "./settings/settings.service";
 
 const commands = new Composer<ExtendedContext>();
 const commandHandler = new CommandHandler();
 
-const adminService = new AdminService();
-const customCommandsService = new CustomCommandsService();
-
 const isGroupFilter = commands.filter(isGroup);
 const isAdminFilter = commands.filter(isAdmin);
 
-commandHandler.register(["ping"], null, new PingCommand(), isGroupFilter); // FIX: use commands
-commandHandler.register(["translate", "tr"], "(\\w+)?", new TranslateCommand(), isGroupFilter);
+const settingsController = new SettingsController(isAdminFilter);
+const adminService = new AdminService();
+const customCommandsService = new CustomCommandsService();
+
+commandHandler.register(["ping"], null, new PingCommand(), commands);
+commandHandler.register(["translate", "tr"], "(\\w+)?", new TranslateCommand(), commands);
 commandHandler.register(["commands"], null, new CommandsCommand(customCommandsService), isGroupFilter);
 
 commandHandler.register(["kick"], "(.*)?", new KickCommand(), isAdminFilter);
@@ -36,7 +36,6 @@ commandHandler.register(["ban"], "(.*)?", new BanCommand(adminService), isAdminF
 commandHandler.register(["addcom", "addcommand"], "(\\w+) (.*)", new AddComCommand(customCommandsService), isAdminFilter);
 commandHandler.register(["delcom", "deletecommand"], "(\\w+)", new DelComCommand(customCommandsService), isAdminFilter);
 
-const settingsController = new SettingsController(new SettingsService());
-isAdminFilter.use(settingsController.handle.bind(settingsController));
+settingsController.handle();
 
 export default commands;

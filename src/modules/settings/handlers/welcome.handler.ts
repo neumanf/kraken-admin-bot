@@ -7,7 +7,6 @@ export class WelcomeMessageHandler {
 
     async handle(ctx: ExtendedContext): Promise<void> {
         const message = ctx?.message?.text?.trim() ?? "";
-        const message_id = ctx.message?.reply_to_message?.message_id;
         const chatId = ctx.chat?.id;
 
         if (message.trim().length === 0) {
@@ -16,9 +15,9 @@ export class WelcomeMessageHandler {
         }
 
         try {
-            if (chatId && message_id) {
+            if (chatId) {
                 await this.settingsService.set(chatId, "welcomeMessage", message);
-                await ctx.api.editMessageText(chatId, message_id, `${SUCCESS_ICON} Welcome message changed successfully.`);
+                await ctx.reply(`${SUCCESS_ICON} Welcome message changed successfully.`);
             }
         } catch (e) {
             console.error(e);
