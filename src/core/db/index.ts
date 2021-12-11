@@ -10,4 +10,8 @@ export class Database {
 
         return await mongoose.connect(url);
     }
+
+    static async disconnect(): Promise<void> {
+        return await mongoose.disconnect();
+    }
 }

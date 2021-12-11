@@ -1,6 +1,6 @@
 import { Api, Context, RawApi } from "grammy";
 import type { Update, UserFromGetMe } from "@grammyjs/types";
-import { Message } from "grammy/out/platform";
+import { Message } from "grammy/out/platform.node";
 import { Other } from "grammy/out/core/api";
 import { Methods } from "grammy/out/core/client";
 
