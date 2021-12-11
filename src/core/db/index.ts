@@ -6,8 +6,12 @@ export class Database {
         const url =
             NODE_ENV === "production"
                 ? `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`
-                : `mongodb://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+                : `mongodb://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`;
 
         return await mongoose.connect(url);
+    }
+
+    static async disconnect(): Promise<void> {
+        return await mongoose.disconnect();
     }
 }
