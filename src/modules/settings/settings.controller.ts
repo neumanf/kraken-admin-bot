@@ -29,7 +29,6 @@ export class SettingsController extends BaseCommand {
                         welcomeMessage.messageSuffixMarkdown(),
                     {
                         parse_mode: "Markdown",
-                        reply_markup: { force_reply: true },
                     },
                 ),
             )
@@ -40,7 +39,6 @@ export class SettingsController extends BaseCommand {
                         bannedStickerpacksMessage.messageSuffixMarkdown(),
                     {
                         parse_mode: "Markdown",
-                        reply_markup: { force_reply: true },
                     },
                 ),
             );
